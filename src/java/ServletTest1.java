@@ -3,28 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Paradox
- */
 public class ServletTest1 extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String name=request.getParameter("name");//will return value  
-            out.println("Welcome "+name); 
+            //String name=request.getParameter("name");//will return value  
+            //out.println("Welcome "+name); 
+            String n=request.getParameter("userName");  
+            String p=request.getParameter("userPass");  
             out.println("<h1>Servlet ServletTest1 at " + request.getContextPath() + "</h1>");
+             if(p.equals("servlet")){  
+                RequestDispatcher rd=request.getRequestDispatcher("servlet2");  
+                rd.forward(request, response);  
+            }  
+            else{
+                out.print("Sorry UserName or Password Error!");  
+                RequestDispatcher rd=request.getRequestDispatcher("/index.html");  
+                rd.include(request, response);  
+                      
+            }  
         }
     }
 
